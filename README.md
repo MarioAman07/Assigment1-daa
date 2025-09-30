@@ -6,15 +6,16 @@ This project implements several classic divide-and-conquer algorithms in Java wi
 
 ## Project Structure
 
-src/main/java/org/example/
-├── algorithms/
-│ ├── MergeSort.java
-│ ├── QuickSort.java
-│ └── DeterministicSelect.java
-├── metrics/
-│ └── Metrics.java
-└── util/
-└── ArrayUtils.java
+.
+├── algorithms
+│   ├── MergeSort.java
+│   ├── QuickSort.java
+│   └── DeterministicSelect.java
+├── metrics
+│   └── Metrics.java
+└── util
+    └── ArrayUtils.java
+
 
 
 - **algorithms/**: contains implementations of sorting and selection algorithms.  
