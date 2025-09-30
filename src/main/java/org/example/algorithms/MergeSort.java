@@ -3,61 +3,52 @@ package org.example.algorithms;
 import org.example.metrics.Metrics;
 
 public class MergeSort {
-    private static final int CUTOFF = 16; // small-n cutoff
+    private static final int CUTOFF = 16;
 
-    public static void sort(int[] arr, Metrics metrics) {
-        int[] buffer = new int[arr.length]; // reusable buffer
-        sort(arr, buffer, 0, arr.length - 1, metrics);
+    public static void sort(int[] arr) {
+        int[] aux = new int[arr.length];
+        sort(arr, aux, 0, arr.length - 1);
     }
 
-    private static void sort(int[] arr, int[] buffer, int left, int right, Metrics metrics) {
-        if (right - left + 1 <= CUTOFF) {
-            insertionSort(arr, left, right, metrics);
+    private static void sort(int[] arr, int[] aux, int lo, int hi) {
+        if (hi - lo + 1 <= CUTOFF) {
+            insertionSort(arr, lo, hi);
             return;
         }
 
-        int mid = (left + right) >>> 1;
+        Metrics.enterRecursion();
 
-        metrics.enterRecursion();
-        sort(arr, buffer, left, mid, metrics);
-        sort(arr, buffer, mid + 1, right, metrics);
-        metrics.exitRecursion();
+        int mid = lo + (hi - lo) / 2;
+        sort(arr, aux, lo, mid);
+        sort(arr, aux, mid + 1, hi);
+        merge(arr, aux, lo, mid, hi);
 
-        merge(arr, buffer, left, mid, right, metrics);
+        Metrics.exitRecursion();
     }
 
-    private static void merge(int[] arr, int[] buffer, int left, int mid, int right, Metrics metrics) {
-        System.arraycopy(arr, left, buffer, left, right - left + 1);
+    private static void merge(int[] arr, int[] aux, int lo, int mid, int hi) {
+        System.arraycopy(arr, lo, aux, lo, hi - lo + 1);
 
-        int i = left, j = mid + 1;
-        for (int k = left; k <= right; k++) {
-            if (i > mid) {
-                arr[k] = buffer[j++];
-            } else if (j > right) {
-                arr[k] = buffer[i++];
-            } else {
-                metrics.incComparisons();
-                if (buffer[i] <= buffer[j]) {
-                    arr[k] = buffer[i++];
-                } else {
-                    arr[k] = buffer[j++];
-                }
+        int i = lo, j = mid + 1;
+        for (int k = lo; k <= hi; k++) {
+            if (i > mid) arr[k] = aux[j++];
+            else if (j > hi) arr[k] = aux[i++];
+            else {
+                Metrics.incrementComparisons();
+                if (aux[j] < aux[i]) arr[k] = aux[j++];
+                else arr[k] = aux[i++];
             }
         }
     }
 
-    private static void insertionSort(int[] arr, int left, int right, Metrics metrics) {
-        for (int i = left + 1; i <= right; i++) {
+    private static void insertionSort(int[] arr, int lo, int hi) {
+        for (int i = lo + 1; i <= hi; i++) {
             int key = arr[i];
             int j = i - 1;
-            while (j >= left) {
-                metrics.incComparisons();
-                if (arr[j] > key) {
-                    arr[j + 1] = arr[j];
-                    j--;
-                } else {
-                    break;
-                }
+            while (j >= lo && arr[j] > key) {
+                Metrics.incrementComparisons();
+                arr[j + 1] = arr[j];
+                j--;
             }
             arr[j + 1] = key;
         }
