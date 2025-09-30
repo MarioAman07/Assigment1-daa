@@ -98,9 +98,9 @@ mvn test
 
 
 ## Summary
-All implemented algorithms match theoretical analysis:
-MergeSort: Θ(n log n)
-QuickSort: average Θ(n log n)
-Deterministic Select: Θ(n)
-Metrics allow observing constant-factor effects, recursion depth, and comparison counts.
-Project is ready for the next steps: Closest Pair of Points and CLI/benchmarking.
+- **All implemented algorithms match theoretical analysis:
+- **MergeSort: Θ(n log n)
+- **QuickSort: average Θ(n log n)
+- **Deterministic Select: Θ(n)
+- **Metrics allow observing constant-factor effects, recursion depth, and comparison counts.
+- **Project is ready for the next steps: Closest Pair of Points and CLI/benchmarking.
