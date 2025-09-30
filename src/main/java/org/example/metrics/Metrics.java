@@ -9,6 +9,7 @@ public class Metrics {
     private static int depth = 0;
     private static int maxDepth = 0;
 
+    // Методы для работы с подсчетами — все static
     public static void incComparisons() { comparisons++; }
     public static void incAllocations() { allocations++; }
 
