@@ -21,7 +21,8 @@ public class QuickSort {
         Metrics.enterRecursion();
 
         int pivotIndex = partition(arr, lo, hi);
-        // recurse on smaller partition first
+
+        // Рекурсивно сначала меньший подмассив
         if (pivotIndex - lo < hi - pivotIndex) {
             sort(arr, lo, pivotIndex - 1);
             sort(arr, pivotIndex + 1, hi);
@@ -39,7 +40,7 @@ public class QuickSort {
         int pivot = arr[hi];
         int i = lo;
         for (int j = lo; j < hi; j++) {
-            Metrics.incrementComparisons();
+            Metrics.incComparisons(); // исправлено
             if (arr[j] <= pivot) {
                 swap(arr, i, j);
                 i++;
@@ -54,7 +55,7 @@ public class QuickSort {
             int key = arr[i];
             int j = i - 1;
             while (j >= lo) {
-                Metrics.incrementComparisons();
+                Metrics.incComparisons(); // исправлено
                 if (arr[j] > key) {
                     arr[j + 1] = arr[j];
                     j--;
@@ -69,6 +70,7 @@ public class QuickSort {
             int tmp = arr[i];
             arr[i] = arr[j];
             arr[j] = tmp;
+            Metrics.incAllocations(); // считаем как одну «операцию записи»
         }
     }
 }
