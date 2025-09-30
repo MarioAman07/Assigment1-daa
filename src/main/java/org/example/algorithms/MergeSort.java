@@ -1,11 +1,13 @@
 package org.example.algorithms;
 
 import org.example.metrics.Metrics;
+import org.example.util.ArrayUtils;
 
 public class MergeSort {
     private static final int CUTOFF = 16;
 
     public static void sort(int[] arr) {
+        ArrayUtils.checkNotNullOrEmpty(arr); // guard
         int[] aux = new int[arr.length];
         sort(arr, aux, 0, arr.length - 1);
     }
@@ -34,7 +36,7 @@ public class MergeSort {
             if (i > mid) arr[k] = aux[j++];
             else if (j > hi) arr[k] = aux[i++];
             else {
-                Metrics.incComparisons();  // исправлено
+                Metrics.incComparisons();
                 if (aux[j] < aux[i]) arr[k] = aux[j++];
                 else arr[k] = aux[i++];
             }
@@ -46,9 +48,9 @@ public class MergeSort {
             int key = arr[i];
             int j = i - 1;
             while (j >= lo) {
-                Metrics.incComparisons();  // исправлено
+                Metrics.incComparisons();
                 if (arr[j] > key) {
-                    arr[j + 1] = arr[j];
+                    ArrayUtils.swap(arr, j, j + 1); // через ArrayUtils
                     j--;
                 } else break;
             }
@@ -56,4 +58,3 @@ public class MergeSort {
         }
     }
 }
-
