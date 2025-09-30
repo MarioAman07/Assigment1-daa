@@ -34,7 +34,7 @@ public class MergeSort {
             if (i > mid) arr[k] = aux[j++];
             else if (j > hi) arr[k] = aux[i++];
             else {
-                Metrics.incrementComparisons();
+                Metrics.incComparisons();  // исправлено
                 if (aux[j] < aux[i]) arr[k] = aux[j++];
                 else arr[k] = aux[i++];
             }
@@ -45,12 +45,15 @@ public class MergeSort {
         for (int i = lo + 1; i <= hi; i++) {
             int key = arr[i];
             int j = i - 1;
-            while (j >= lo && arr[j] > key) {
-                Metrics.incrementComparisons();
-                arr[j + 1] = arr[j];
-                j--;
+            while (j >= lo) {
+                Metrics.incComparisons();  // исправлено
+                if (arr[j] > key) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                } else break;
             }
             arr[j + 1] = key;
         }
     }
 }
+
